@@ -1,0 +1,65 @@
+{
+  // Ein beschreibender Name für den Dev-Container.
+  "name": "Stellar Codex (React & TypeScript)",
+
+  // Verwenden Sie ein minimales Basis-Image und fügen Sie Features für ein modernes, deklaratives Setup hinzu.
+  // Dieser Ansatz ist flexibler als die Verwendung eines vorgefertigten Images.
+  "image": "mcr.microsoft.com/devcontainers/base:ubuntu-22.04",
+
+  // "Features" sind eigenständige Einheiten von Installationscode und Dev-Container-Konfiguration.
+  "features": {
+    // Installiert Node.js, npm und yarn. 'lts' verwendet die neueste Long-Term Support-Version.
+    "ghcr.io/devcontainers/features/node:1": {
+      "version": "lts"
+    }
+  },
+
+  // --- VS Code-Anpassungen ---
+  "customizations": {
+    "vscode": {
+      // Definieren Sie Standardeinstellungen für den VS Code-Arbeitsbereich im Container.
+      "settings": {
+        // --- Editor-Einstellungen ---
+        "editor.formatOnSave": true, // Dateien beim Speichern automatisch formatieren.
+        "editor.defaultFormatter": "esbenp.prettier-vscode", // Prettier als Standard-Formatierer verwenden.
+        "files.eol": "\n", // Unix-Stil Zeilenenden erzwingen.
+
+        // --- Terminal-Einstellungen ---
+        "terminal.integrated.defaultProfile.linux": "bash",
+        "terminal.integrated.profiles.linux": {
+          "bash": {
+            "path": "/bin/bash"
+          }
+        }
+      },
+      // Liste der VS Code-Erweiterungen, die automatisch im Container installiert werden sollen.
+      "extensions": [
+        "dbaeumer.vscode-eslint",      // Linter für JavaScript/TypeScript.
+        "esbenp.prettier-vscode",      // Code-Formatierer für konsistenten Stil.
+        "bradlc.vscode-tailwindcss",   // IntelliSense für Tailwind CSS-Klassen.
+        "ms-vscode.vscode-typescript-next" // Stellt sicher, dass die neuesten TypeScript-Editor-Funktionen vorhanden sind.
+      ]
+    }
+  },
+
+  // --- Port-Weiterleitung ---
+  // Leitet den Port weiter, auf dem der Entwicklungsserver laufen wird.
+  "forwardPorts": [5500],
+  // Passt das Verhalten des weitergeleiteten Ports in Codespaces an.
+  "portsAttributes": {
+    "5500": {
+      "label": "Application Preview",
+      "onAutoForward": "openPreview" // Öffnet automatisch einen Vorschau-Tab, wenn der Port weitergeleitet wird.
+    }
+  },
+
+  // --- Lebenszyklus-Skripte ---
+  // "postCreateCommand" wird einmal ausgeführt, nachdem der Container erstellt wurde.
+  // Wird für einmalige Einrichtungsaufgaben wie die Installation globaler Abhängigkeiten verwendet.
+  "postCreateCommand": "sudo npm install -g serve",
+
+  // "postStartCommand" wird bei jedem Start des Containers ausgeführt.
+  // Wird zum Starten von Hintergrunddiensten wie unserem Entwicklungsserver verwendet.
+  // 'serve -s . -l 5500' stellt das aktuelle Verzeichnis als Single-Page-App auf Port 5500 bereit.
+  "postStartCommand": "serve -s . -l 5500"
+}

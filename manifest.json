@@ -1,0 +1,23 @@
+{
+  "name": "Stellar Codex",
+  "short_name": "Codex",
+  "description": "A tool for exploring and documenting hard science fiction concepts.",
+  "start_url": ".",
+  "display": "standalone",
+  "background_color": "#030712",
+  "theme_color": "#0891b2",
+  "icons": [
+    {
+      "src": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxOTIiIGhlaWdodD0iMTkyIiB2aWV3Qm94PSIwIDAgMjQgMjQiIGZpbGw9Im5vbmUiIHN0cm9rZT0iIzA4OTFiMiIgc3Ryb2tlLXdpZHRoPSIxLjUiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCI+PGNpcmNsZSBjeD0iMTIiIGN5PSIxMiIgcj0iMTAiLz48Y2lyY2xlIGN4PSIxMiIgY3k9IjEyIiByPSI0Ii8+PGxpbmUgeDE9IjIxLjE3IiB5MT0iOCIgZGlyMj0iMTIiIHkyPSIxMiIvPjxsaW5lIHgxPSIzLjI3IiB5MT0iMTIiIGRpcmM9IjEyIiB5Mj0iMTIiLz48bGluZSB4MT0iMTIiIHkxPSIxMiIgZGlyMj0iMTIiIHkyPSIyMS42OCIvPjxsaW5lIHgxPSIxMiIgeTE9IjIiIGRpcmM9IjEyIiB5Mj0iNC4yMyIvPjwvc3ZnPg==",
+      "sizes": "192x192",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    },
+    {
+      "src": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI1MTIiIGhlaWdodD0iNTEyIiB2aWV3Qm94PSIwIDAgMjQgMjQiIGZpbGw9Im5vbmUiIHN0cm9rZT0iIzA4OTFiMiIgc3Ryb2tlLXdpZHRoPSIxIiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiPjxjaXJjbGUgY3g9IjEyIiBjeT0iMTIiIHI9IjEwIi8+PGNpcmNsZSBjeD0iMTIiIGN5PSIxMiIgcj0iNC41IiBmaWxsPSIjMDc1OTZiIiBzdHJva2U9Im5vbmUiLz48cGF0aCBkPSJNIDEyIDIgTCAxMiA2IE0gMTIgMTggTCAxMiAyMiBNIDIgMTIgTCA2IDEyIE0gMTggMTIgTCAyMiAxMiIgZmlsbD0ibm9uZSIgc3Ryb2tlLXdpZHRoPSIwLjciLz48L3N2Zz4=",
+      "sizes": "512x512",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}

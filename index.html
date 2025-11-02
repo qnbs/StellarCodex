@@ -4,9 +4,17 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Stellar Codex</title>
+    
+    <!-- PWA Manifest Link -->
+    <link rel="manifest" href="/manifest.json">
+    <meta name="theme-color" content="#0891b2" />
+
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Roboto:wght@300;400;700&display=swap');
+        html {
+            scroll-behavior: smooth;
+        }
         body {
             font-family: 'Roboto', sans-serif;
             background-color: #030712; /* bg-gray-950 */
@@ -21,48 +29,88 @@
         ::-webkit-scrollbar-track {
             background: #111827; /* bg-gray-900 */
         }
+        body.theme-cyan ::-webkit-scrollbar-thumb { background: #0891b2; /* cyan-600 */ }
+        body.theme-cyan ::-webkit-scrollbar-thumb:hover { background: #06b6d4; /* cyan-500 */ }
+        body.theme-amber ::-webkit-scrollbar-thumb { background: #d97706; /* amber-600 */ }
+        body.theme-amber ::-webkit-scrollbar-thumb:hover { background: #f59e0b; /* amber-500 */ }
         ::-webkit-scrollbar-thumb {
-            background: #0891b2; /* cyan-600 */
             border-radius: 4px;
         }
-        ::-webkit-scrollbar-thumb:hover {
-            background: #06b6d4; /* cyan-500 */
+
+        /* Keyframe Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
         }
-        /* Animation for feedback toast */
-        @keyframes fade-in-up {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+        @keyframes fadeOut {
+            from { opacity: 1; }
+            to { opacity: 0; }
         }
-        .animate-fade-in-up {
-            animation: fade-in-up 0.5s ease-out forwards;
+        @keyframes slideInUp {
+            from { transform: translateY(20px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+        @keyframes slideOutDown {
+             from { transform: translateY(0); opacity: 1; }
+             to { transform: translateY(20px); opacity: 0; }
+        }
+        @keyframes background-pan {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .view-enter { animation: fadeIn 0.5s ease-out forwards; }
+        .view-exit { animation: fadeOut 0.3s ease-in forwards; }
+
+        .form-enter { animation: slideInUp 0.5s ease-out forwards; }
+        .form-exit { animation: slideOutDown 0.5s ease-out forwards; }
+
+        .toast-enter { animation: slideInUp 0.5s ease-out forwards; }
+        .toast-exit { animation: slideOutDown 0.5s ease-out forwards; }
+        
+        .animated-grid {
+            background-image: linear-gradient(rgba(14, 165, 233, 0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(14, 165, 233, 0.05) 1px, transparent 1px);
+            background-size: 2rem 2rem;
+            animation: background-pan 30s linear infinite;
         }
     </style>
     <script type="importmap">
-    {
-      "imports": {
-        "react/": "https://aistudiocdn.com/react@^19.2.0/",
-        "react": "https://aistudiocdn.com/react@^19.2.0",
-        "react-dom/": "https://aistudiocdn.com/react-dom@^19.2.0/",
-        "idb": "https://aistudiocdn.com/idb@^8.0.3",
-        "lucide-react": "https://aistudiocdn.com/lucide-react@^0.548.0"
-      }
-    }
-    </script>
+{
+  "imports": {
+    "react": "https://aistudiocdn.com/react@19.2.0",
+    "react-dom/client": "https://aistudiocdn.com/react-dom@19.2.0/client",
+    "idb": "https://aistudiocdn.com/idb@8.0.3",
+    "lucide-react": "https://aistudiocdn.com/lucide-react@0.548.0",
+    "@reduxjs/toolkit": "https://aistudiocdn.com/reduxjs/toolkit@2.2.6",
+    "react-redux": "https://aistudiocdn.com/react-redux@9.1.2",
+    "redux-persist": "https://aistudiocdn.com/redux-persist@6.0.0",
+    "redux-persist/integration/react": "https://aistudiocdn.com/redux-persist@6.0.0/es/integration/react",
+    "redux-persist/lib/storage": "https://aistudiocdn.com/redux-persist@6.0.0/es/storage",
+    "react-dom/": "https://aistudiocdn.com/react-dom@^19.2.0/",
+    "react/": "https://aistudiocdn.com/react@^19.2.0/",
+    "redux-persist/": "https://aistudiocdn.com/redux-persist@^6.0.0/"
+  }
+}
+</script>
 </head>
 <body>
     <div id="root"></div>
-    <!-- Note: In-browser transpilation with Babel is for demonstration. A build step is recommended for production. -->
-    <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
-    <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
-    <script src="https://unpkg.com/lucide-react@0.379.0/dist/umd/lucide-react.js"></script>
-    <script src="https://unpkg.com/idb@8/build/iife/with-async-ittr.js"></script>
-    <script src="https://unpkg.com/babel@7/standalone/babel.min.js"></script>
-    <script type="text/babel" data-type="module" src="index.tsx"></script>
+    <script type="module" src="/src/index.tsx"></script>
+    
+    <!-- PWA Service Worker Registration -->
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/sw.js', { scope: '/' })
+                    .then(registration => {
+                        console.log('Stellar Codex ServiceWorker registration successful with scope: ', registration.scope);
+                    })
+                    .catch(error => {
+                        console.log('Stellar Codex ServiceWorker registration failed: ', error);
+                    });
+            });
+        }
+    </script>
 </body>
 </html>

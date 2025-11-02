@@ -10,9 +10,11 @@
   },
   "dependencies": {
     "react": "^19.2.0",
-    "react-dom": "^19.2.0",
-    "idb": "^8.0.3",
-    "lucide-react": "^0.548.0"
+    "idb": "8.0.3",
+    "lucide-react": "0.548.0",
+    "react-redux": "9.1.2",
+    "redux-persist": "^6.0.0",
+    "react-dom": "^19.2.0"
   },
   "devDependencies": {
     "@types/node": "^22.14.0",
