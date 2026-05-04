@@ -15,6 +15,25 @@ export interface Concept {
 
 export type ConceptCreate = Omit<Concept, 'id'>;
 
+/** Directed relation for consistency graph (IndexedDB `conceptEdges`) */
+export interface ConceptEdge {
+    id: number;
+    sourceConceptId: number;
+    targetConceptId: number;
+    relationType: string;
+}
+
+export type ConceptEdgeCreate = Omit<ConceptEdge, 'id'>;
+
+/** Stored worldbuilding bible document */
+export interface WorldBible {
+    id: string;
+    title: string;
+    bodyMarkdown: string;
+    createdAt: number;
+    updatedAt: number;
+}
+
 export interface FeedbackState {
     id: number;
     message: string;

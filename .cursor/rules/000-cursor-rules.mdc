@@ -1,0 +1,30 @@
+---
+description: ALWAYS use when asked to CREATE A RULE or UPDATE A RULE or when taught a lesson to RETAIN AS NEW RULE
+globs:
+alwaysApply: false
+---
+
+# Meta: Regeln für Regeln
+
+## Pflichtverhalten
+
+- Wenn der Nutzer eine Regel erstellen anweist oder du aus einer Korrektur lernst, **musst** du eine `.mdc`-Datei unter `.cursor/rules/` **anlegen oder anpassen**.
+- **Nomenklatur**: dreistellige Kebab-Case-Präfixe — `001–099` Core/Sicherheit, `100–199` Integrationen/APIs/Vite/OIDC/KI (`102` Vite/BYOK, `103` AI-Schicht), `200–299` Architektur/Patterns, `300–399` UI/Styling, `800–899` Workflows/Testing.
+- **Frontmatter `description`**: ATO (Action, Trigger, Outcome), **maximal 120 Zeichen**.
+- **`globs`**: nach Kommas **keine Leerzeichen**; **keine** Anführungszeichen um Muster.
+
+<example>
+```yaml
+globs: *.ts,src/**/*.tsx
+```
+</example>
+
+<example type="invalid">
+```yaml
+globs: "*.ts", src/**/*.tsx
+```
+</example>
+
+- **Token-Footprint**: Regeln **≤ 200 Zeilen**. Statt Code zu duplizieren, auf kanonische Dateien verweisen (z. B. „Siehe `@src/services/database.ts`“).
+- **Veranschaulichung**: `<example>` und `<example type="invalid">` für gültige vs. ungültige Muster nutzen.
+- **Schreibweise**: Regeldateien mit dem normalen Texteditor bearbeiten, um MDC-Editor-Glitches zu vermeiden.

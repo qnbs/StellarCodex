@@ -6,6 +6,7 @@ import { useAppSelector, useAppDispatch } from '../../store/hooks';
 import { translations } from '../../lib/i18n';
 import { setTheme, setLanguage, showToast } from '../../store/slices/uiSlice';
 import { clearAllConcepts } from '../../store/slices/conceptsSlice';
+import { AISettingsPanel } from '../../components/ai/AISettingsPanel';
 
 export const Settings: React.FC = memo(() => {
     const dispatch = useAppDispatch();
@@ -19,7 +20,7 @@ export const Settings: React.FC = memo(() => {
             try {
                 await dispatch(clearAllConcepts()).unwrap();
                 dispatch(showToast({ message: t.feedback.db_cleared, type: 'success' })); 
-            } catch(e) {
+            } catch {
                 dispatch(showToast({ message: texts.conceptDatabase.feedback.error, type: 'error' }));
             }
         }
@@ -45,6 +46,9 @@ export const Settings: React.FC = memo(() => {
         <div className="p-4 md:p-8 max-w-4xl mx-auto">
             <h2 className={`text-3xl font-orbitron ${theme.accentText} mb-8`}>{t.title}</h2>
             <div className="space-y-8">
+                <SettingsCard title={t.ai.section_title} description={t.ai.section_desc}>
+                    <AISettingsPanel aiLabels={t.ai} />
+                </SettingsCard>
                 <SettingsCard title={t.theme.title} description={t.theme.description}>
                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                         {(Object.keys(themes) as ThemeName[]).map(key => (

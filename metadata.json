@@ -1,5 +1,5 @@
 {
-  "description": "Stellar Codex is a tool for exploring and documenting hard science fiction concepts. All data is stored locally in your browser, ensuring privacy and offline availability.",
+  "description": "Stellar Codex — hard science fiction concept database with optional BYOK AI (encrypted vault), concept graph, and world bibles. Data stays in your browser (IndexedDB).",
   "requestFramePermissions": [],
   "name": "StellarCodex"
 }

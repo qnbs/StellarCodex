@@ -1,0 +1,21 @@
+---
+description: IDB schema via constants; vault edges bibles; idempotent upgrades in database.ts
+globs: src/services/**/*.ts,src/lib/constants.ts,src/types/index.ts,src/store/slices/conceptsSlice.ts
+alwaysApply: false
+---
+
+# IndexedDB (`idb`)
+
+- **Schema**: `DB_NAME`, `DB_VERSION`, Store-Namen **nur** in `@src/lib/constants.ts` (`STORE_NAME`, `STORE_VAULT_*`, `STORE_CONCEPT_EDGES`, `STORE_WORLD_BIBLES`, …). Migration: Version erhöhen, `upgrade` in `@src/services/database.ts` idempotent.
+- **Typen**: `Concept`, `ConceptEdge`, `WorldBible` u. a. in `@src/types/index.ts` mit Stores abstimmen.
+- **Vault:** verschlüsselte Provider-Keys liegen in `vaultSecrets` / Meta in `vaultMeta` — nur über `@src/services/security/aiKeyVault.ts` lesen/schreiben.
+
+<example>
+Neues Feld: Typ erweitern, ggf. Migration in `upgrade`, Service-Methoden anpassen, Slice/Thunk prüfen.
+</example>
+
+<example type="invalid">
+Store-Namen oder Versionsnummern streuen oder ohne Upgrade Pfad ändern.
+</example>
+
+- Keine lang blockierenden Operationen auf dem Main-Thread ohne Aufteilung; Fehler nach oben propagieren, nicht schlucken.

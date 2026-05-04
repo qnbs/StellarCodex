@@ -1,0 +1,31 @@
+---
+description: Project Manifest and Global Architecture
+alwaysApply: true
+---
+
+# StellarCodex
+
+KI-gestützte Single-Page-App (Google AI Studio–Export): Konzepterfassung, Orbit-/Science-Views, lokale Persistenz. README verweist auf Gemini; API-Key nur über Umgebungsvariablen.
+
+## Stack
+
+- **Build**: Vite 6, `@vitejs/plugin-react`, ES Modules, Dev-Server Port 3000.
+- **UI**: React 19, StrictMode im Einstieg, `lucide-react`, eigene Komponenten unter `src/components/**`, Views unter `src/views/**`.
+- **State**: Redux Toolkit (`configureStore`, `createAsyncThunk`), `redux-persist` mit `localStorage` für UI-Teilmenge.
+- **Daten**: IndexedDB via `idb`; Service `src/services/database.ts`, Konstanten `src/lib/constants.ts`, Typen `src/types/index.ts`.
+- **Sprache**: TypeScript ~5.8, Pfadalias `@/*` → Repo-Root, `jsx: react-jsx`, kein `strict` in `tsconfig.json` (bewusst dokumentiert).
+
+## Architektur
+
+- **Schichten**: UI (Views/Komponenten) → Redux-Slices → Services/IDB; Kontext (`src/context/**`) für Theme, Locale, DB-Bootstrap.
+- **Einsteige**: `src/index.tsx` / `src/App.tsx` als modulare Hauptlinie; Root `index.tsx` enthält historisch gebündelten Code — neue Arbeit bevorzugt unter `src/`.
+- **Secrets**: `vite.config.ts` lädt `GEMINI_API_KEY` per `loadEnv` und injiziert nur über `define`; niemals Keys im Quelltext.
+
+## Konventionen
+
+- Kein `.cursorrules`; Kontext über `.cursor/index.mdc` und **modulare** `.cursor/rules/*.mdc` mit Ziel-Globs.
+- Bundle-/Client-Sicherheit: keine Secrets in Logs oder UI; Fehler nutzerfreundlich, Details nur in Dev.
+
+## Tests
+
+- Aktuell kein Runner in `package.json`; bei Einführung Vitest/Jest — siehe `800-testing-standards.mdc`.

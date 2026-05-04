@@ -1,20 +1,49 @@
-<div align="center">
-<img width="1200" height="475" alt="GHBanner" src="https://github.com/user-attachments/assets/0aa67016-6eaf-458a-adb2-6e31a0763ed6" />
-</div>
+# Stellar Codex
 
-# Run and deploy your AI Studio app
+**Stellar Codex** is a privacy-first tool for exploring and documenting **hard science fiction** concepts. Your concept data lives in **IndexedDB** in your browser. Optional **AI** features use a **BYOK (bring your own key)** model: API keys are **encrypted at rest** with your passphrase (Web Crypto + IndexedDB), not baked into the build.
 
-This contains everything you need to run your app locally.
+## Features
 
-View your app in AI Studio: https://ai.studio/apps/drive/1VBmANwHWcxuIAXYojggRW61Rv2Y8V2gp
+- **Concept database** — local CRUD for ideas, plausibility, and technical notes.
+- **Concept graph** — link concepts with typed relations (stored locally).
+- **World bible generator** — uses the unified AI layer with Sci‑Fi prompt templates.
+- **Multi-provider AI** — mock (offline), **Ollama** (LAN), **Gemini**, **OpenAI**; routing modes (`local_first`, `cloud_first`, …) with simple circuit breaking.
+- **Consistency checks** — heuristic + LLM-assisted hard-SF consistency passes.
+- **PWA** — installable; service worker caches core assets (see `sw.js`).
 
-## Run Locally
+## Requirements
 
-**Prerequisites:**  Node.js
+- **Node.js** ≥ 20 (see `package.json` `engines`).
 
+## Run locally
 
-1. Install dependencies:
-   `npm install`
-2. Set the `GEMINI_API_KEY` in [.env.local](.env.local) to your Gemini API key
-3. Run the app:
-   `npm run dev`
+```bash
+npm install
+npm run dev
+```
+
+Open the URL shown (default port **3000**). There is **no** required `.env` API key for the client. Add keys under **Settings → AI** after creating the encrypted vault.
+
+### Scripts
+
+| Script        | Purpose                                      |
+|---------------|----------------------------------------------|
+| `npm run dev` | Vite dev server                              |
+| `npm run build` | Production build into `dist/`            |
+| `npm run typecheck` | `tsc --noEmit`                       |
+| `npm run test` | Vitest                                      |
+| `npm run lint` | ESLint (flat config)                       |
+| `npm run ci` | Typecheck + build (matches CI core job)     |
+| `npm run ci:full` | Typecheck + test + lint + build        |
+
+## CI
+
+GitHub Actions (`.github/workflows/ci.yml`) runs **install → typecheck → (lint if configured) → tests if Vitest config exists → build** on push/PR. Prefer fixing failures from CI logs on constrained hardware; see `docs/DEVELOPMENT.md`.
+
+## Deploy
+
+See [docs/DEPLOY.md](docs/DEPLOY.md).
+
+## License
+
+[MIT](LICENSE)

@@ -1,0 +1,30 @@
+---
+description: Provider-agnostische KI via Vault; Adapter unter src/services/ai; keine Klartext-Keys in State
+globs: src/services/ai/**/*.ts,src/services/security/**/*.ts,src/components/ai/**/*.tsx,src/store/slices/ai*.ts,src/store/slices/localModelsSlice.ts
+alwaysApply: false
+---
+
+# KI-Schicht & BYOK
+
+## Kanonische Pfade
+
+- **Facade & Routing:** `@src/services/ai/aiService.ts`, `core/hybridRouter.ts`, `core/circuitBreaker.ts`
+- **Adapter:** `@src/services/ai/adapters/` (mock, Gemini, OpenAI, Ollama — erweiterbar)
+- **Vault:** `@src/services/security/aiKeyVault.ts`, Krypto: `@src/services/security/cryptoHelpers.ts`
+- **Sci-Fi / Konsistenz:** `@src/services/ai/prompts/sci-fi/`, `@src/services/ai/consistency/`
+- **UI:** `@src/components/ai/` — keine Key-Werte anzeigen oder loggen
+
+## Regeln
+
+- **Secrets:** nur über `getProviderSecret` nach Vault-Unlock; **nie** in Redux persistieren (Klartext), nie `define` im Vite-Build.
+- **Neuer Cloud-Provider:** `IAIProvider` implementieren, in `buildProviderRegistry` registrieren, `ProviderId` in `core/types.ts` ergänzen.
+- **Ollama/LAN:** Basis-URL aus `aiPreferences` (redux-persist); Discovery nur über `discoverOllamaModels` — Fehler offline-freundlich.
+- **Tests:** Netzwerk und Vault mit Mocks; siehe `@.cursor/rules/800-testing-standards.mdc`.
+
+<example>
+Nutzer wählt Primary Provider + Routing Mode; `chatCompleteWithFallback` versucht Kette gemäß `routingMode`.
+</example>
+
+<example type="invalid">
+API-Key als Prop von Settings in Redux-Slice `persist`-whitelist aufnehmen.
+</example>

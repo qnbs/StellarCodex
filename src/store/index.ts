@@ -13,6 +13,9 @@ import storage from 'redux-persist/lib/storage';
 
 import conceptsReducer from './slices/conceptsSlice';
 import uiReducer from './slices/uiSlice';
+import aiPreferencesReducer from './slices/aiPreferencesSlice';
+import localModelsReducer from './slices/localModelsSlice';
+import aiUsageReducer from './slices/aiUsageSlice';
 
 const uiPersistConfig = {
   key: 'ui',
@@ -20,9 +23,18 @@ const uiPersistConfig = {
   whitelist: ['themeName', 'language'],
 };
 
+const aiPreferencesPersistConfig = {
+  key: 'aiPreferences',
+  storage,
+  whitelist: ['primaryProvider', 'routingMode', 'ollamaBaseUrl'],
+};
+
 const rootReducer = combineReducers({
     concepts: conceptsReducer,
     ui: persistReducer(uiPersistConfig, uiReducer),
+    aiPreferences: persistReducer(aiPreferencesPersistConfig, aiPreferencesReducer),
+    localModels: localModelsReducer,
+    aiUsage: aiUsageReducer,
 });
 
 export const store = configureStore({

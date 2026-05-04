@@ -1,0 +1,28 @@
+---
+description: Read PRD and instructions before architecture changes; MCP placeholders; meeting notes stream
+globs: PRD.md,instructions.md,.notes/meeting_notes.md,docs/**/*.md
+alwaysApply: false
+---
+
+# PRD, Bewusstseins-Stream und MCP
+
+## Product Requirements
+
+- Vor **architektonischen** oder produktweiten Änderungen lesen: **[PRD.md](PRD.md)**, **[instructions.md](instructions.md)**, **[README.md](README.md)**, **[docs/DEPLOY.md](docs/DEPLOY.md)** bei Deploy/Infra.
+
+## Consciousness Stream
+
+- Kontextuelle Erinnerungen, Beschlüsse und offene Fragen für Folgesessions in **`.notes/meeting_notes.md`** festhalten (kurz, datiert, faktenorientiert).
+
+## Model Context Protocol (Platzhalter)
+
+Empfohlen je nach Bedarf zu aktivieren und in Cursor zu konfigurieren:
+
+| Bereich | Beispiel-MCP-Rolle |
+|--------|---------------------|
+| Datenbank | Postgres/SQLite-MCP für spätere Server-Persistenz |
+| Git / Issues | GitHub-MCP für PRs und Issues |
+| Docs | Dokumentations-/Doc-Search-MCP für Gemini/Vite/React |
+| Browser | Chromium/DevTools-MCP für E2E-Diagnose |
+
+Konkrete Servernamen an Team-Setup anbinden; keine Secrets in MCP-Configs committen.

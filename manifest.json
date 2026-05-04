@@ -1,7 +1,7 @@
 {
   "name": "Stellar Codex",
   "short_name": "Codex",
-  "description": "A tool for exploring and documenting hard science fiction concepts.",
+  "description": "Hard SF concept database — local-first, optional BYOK AI, privacy-focused.",
   "start_url": ".",
   "display": "standalone",
   "background_color": "#030712",

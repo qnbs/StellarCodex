@@ -1,4 +1,4 @@
-const CACHE_NAME = 'stellar-codex-cache-v3'; // Cache-Version erhöht für sauberes Update
+const CACHE_NAME = 'stellar-codex-cache-v4';
 const URLS_TO_CACHE = [
     '/',
     '/index.html',

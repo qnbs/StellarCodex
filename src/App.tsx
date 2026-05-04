@@ -3,11 +3,13 @@ import { Header } from './components/layout/Header';
 import { MainContent } from './views/MainContent';
 import { useAppSelector } from './store/hooks';
 import { FeedbackToast } from './components/ui/FeedbackToast';
+import { configureAiRegistry } from './services/ai/aiService';
 
 export const App: React.FC = () => {
     const themeName = useAppSelector((state) => state.ui.themeName);
     const language = useAppSelector((state) => state.ui.language);
     const toasts = useAppSelector((state) => state.ui.toasts);
+    const ollamaBaseUrl = useAppSelector((s) => s.aiPreferences.ollamaBaseUrl);
 
     useEffect(() => {
         const bodyClass = document.body.classList;
@@ -18,6 +20,10 @@ export const App: React.FC = () => {
     useEffect(() => {
         document.documentElement.lang = language;
     }, [language]);
+
+    useEffect(() => {
+        configureAiRegistry({ ollamaBaseUrl });
+    }, [ollamaBaseUrl]);
 
     return (
         <div className="min-h-screen bg-gray-950 text-gray-200 font-sans">

@@ -10,6 +10,8 @@ import { fetchConcepts, addNewConcept, updateExistingConcept, deleteExistingConc
 import { showToast } from '../../store/slices/uiSlice';
 import { themes } from '../../lib/constants';
 import { translations } from '../../lib/i18n';
+import { ConceptGraphPanel } from './components/ConceptGraphPanel';
+import { WorldBiblePanel } from './components/WorldBiblePanel';
 
 export const ConceptDatabase: React.FC = memo(() => {
     const dispatch = useAppDispatch();
@@ -39,7 +41,7 @@ export const ConceptDatabase: React.FC = memo(() => {
             }
             setIsFormVisible(false);
             setEditingConcept(undefined);
-        } catch (error) { 
+        } catch { 
             dispatch(showToast({ message: t.feedback.error, type: 'error' })); 
         }
     }, [dispatch, t]);
@@ -50,7 +52,7 @@ export const ConceptDatabase: React.FC = memo(() => {
                 await dispatch(deleteExistingConcept(id)).unwrap();
                 dispatch(showToast({ message: t.feedback.deleted, type: 'delete' })); 
             } 
-            catch (error) { 
+            catch { 
                 dispatch(showToast({ message: t.feedback.error, type: 'error' })); 
             }
         }
@@ -69,6 +71,12 @@ export const ConceptDatabase: React.FC = memo(() => {
                 {!isFormVisible && <Button onClick={handleStartAdding} leftIcon="Plus">{t.add_button}</Button>}
             </div>
             {isFormVisible && <ConceptForm key={editingConcept?.id ?? 'new'} initialData={editingConcept} onSave={handleSave} onCancel={handleCancel} />}
+            {!loading && concepts.length > 0 && (
+                <>
+                    <ConceptGraphPanel concepts={concepts} themeKey={themeName} labels={t} />
+                    <WorldBiblePanel concepts={concepts} themeKey={themeName} labels={t} />
+                </>
+            )}
             {loading && <div className="flex justify-center py-12"><Spinner /></div>}
             {!loading && (
                 <div className="space-y-4">

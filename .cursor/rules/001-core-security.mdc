@@ -1,0 +1,30 @@
+---
+description: BYOK Vault for API keys; safe async errors; minimal production logging without PII
+globs: *.*
+alwaysApply: false
+---
+
+# Core: Secrets, Fehler, Logging
+
+## Secrets
+
+- **BYOK (Standard):** Cloud-API-Keys nur über den **verschlüsselten Vault** (`@src/services/security/aiKeyVault.ts`, IndexedDB + Web Crypto + Nutzer-Passphrase). **Keine** Keys in `vite.config.ts` `define`, kein Klartext in Redux oder `localStorage`.
+- **Optional (Server-Proxy):** Keys nur **serverseitig** in Umgebungsvariablen des Proxys — nicht im Browser-Bundle.
+- `.env` / `.env.local` **nicht** für Client-Build-Secrets verwenden; `.env.example` bleibt dokumentierend ohne echte Werte.
+- Nie Keys in UI anzeigen, in Redux persistieren (Klartext) oder in Produktionslogs ausgeben.
+
+<example>
+Nutzer legt Gemini/OpenAI-Key in **Einstellungen → KI** ab; Vault entschlüsselt nur sessionweise nach Passphrase.
+</example>
+
+<example type="invalid">
+`define: { GEMINI_API_KEY: ... }` in Vite oder Key-String in Git committed.
+</example>
+
+## Fehlerbehandlung
+
+- Async-Thunks und IDB: abgelehnte Promises sauber an Redux/UI melden; Nutzer kurze, verständliche Meldungen; Stacktraces nur in Development.
+
+## Logging
+
+- Produktionslogs ohne PII und ohne Secrets; bei Debug gezielt und temporär.

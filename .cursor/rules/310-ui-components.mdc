@@ -1,0 +1,32 @@
+---
+description: Build accessible React UI; clear props naming and Redux boundaries for StellarCodex views
+globs: src/components/**/*.tsx,src/views/**/*.tsx
+alwaysApply: false
+---
+
+# UI (React 19, Vite)
+
+## Struktur
+
+- Wiederverwendbare Bausteine unter `@src/components/ui/**`; KI-Einstellungen unter `@src/components/ai/**`; view-spezifisches unter `@src/views/<Feature>/components/**`.
+- Container holen Daten über Redux-Hooks (`@src/store/hooks.ts`); dumb components erhalten Daten via Props.
+
+## Props & Namen
+
+- Props: explizite Typen, booleans als `is*` / `has*`, Handler als `on*`, keine unnötigen `any`.
+
+## Barrierefreiheit
+
+- Interaktive Elemente: fokussierbar, Tastaturbedienung, sinnvolle `aria-*`/`label`/Überschriftenhierarchie; Icons nicht allein ohne Text, wenn Bedeutung nicht sonst klar.
+
+<example>
+Button mit sichtbarem Label oder `aria-label`; Formularfelder mit zugehörigem `<label>`.
+</example>
+
+<example type="invalid">
+`<div onClick>` ohne Rolle/Tastatur für eine primäre Aktion.
+</example>
+
+## Styling
+
+- Bestehende Theme-/Klassenmuster aus Kontext und Header/Komponenten fortsetzen; keine wildcard globals ohne Absprache.

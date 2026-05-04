@@ -1,0 +1,34 @@
+---
+description: Schwere Builds und E2E nicht auf Low-End lokal — Cloud CI nach Push ist maßgeblich
+globs:
+alwaysApply: true
+---
+
+# CI Cloud-First (Low-End-freundlich)
+
+## Grundsatz
+
+- **Production-Build** (`npm run build`), **vollständige Test-Suites** und **E2E (Playwright)** sind **keine** verpflichtenden Daueraufgaben auf schwacher lokaler Hardware.
+- **Maßgeblich** ist der **GitHub Actions**-Lauf nach **Commit + Push** (siehe `.github/workflows/ci.yml` und `docs/DEVELOPMENT.md`).
+
+## Lokal erlaubt / empfohlen
+
+- `npm run dev` für Entwicklung.
+- `npm run typecheck` wenn möglich (schnell, wenig Ressourcen).
+- `npm run lint` wenn ESLint im Repo aktiv (`eslint.config.js`).
+- Sehr gezielte Unit-Tests (`npm run test`) bei isolierter Arbeit.
+- Vollständige Pipeline optional: `npm run ci:full` (siehe `docs/DEVELOPMENT.md`). Schwere Builds primär in **GitHub Actions** Job `verify`.
+
+## Bei Rot in CI
+
+1. Workflow-Log in GitHub Actions öffnen, Fehlerzeile und Stacktrace analysieren.
+2. Fix im Repo, committen, pushen — nicht „lokal solange bauen bis es passt“, wenn die Maschine dafür ungeeignet ist.
+
+## Agent-Verhalten
+
+- Nach substanziellen Codeänderungen: **nicht** davon ausgehen, dass ein vollständiger lokaler Build/E2E-Lauf durchgeführt wurde; stattdessen **Commit/Push vorbereiten** und den Nutzer auf **CI** verweisen bzw. Fixes aus CI-Logs ableiten.
+- `graphify update .` nach Codeänderungen weiterhin ausführen (Projektregel), sofern verfügbar — das ist leichtgewichtig.
+
+## Anti-Pattern
+
+- Mehrfaches `npm run build` oder Playwright-Läufe auf einem als „low-end“ bezeichneten Kontext nur um „sicherzugehen“, wenn CI ohnehin die gleiche Prüfung übernimmt.

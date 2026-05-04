@@ -1,0 +1,28 @@
+---
+description: Apply KISS and DRY; split files over 700 lines and extract helpers under 200-line chunks
+globs: *.*
+alwaysApply: false
+---
+
+# Architektur: KISS, DRY, Dateigrößen
+
+## Prinzipien
+
+- **KISS**: einfachste tragfähige Lösung; keine vorgezogene Abstraktion.
+- **DRY**: geteilte Logik in `@src/lib/**`, Services oder Hooks statt Kopieren.
+
+## Zeilenlimits
+
+- **Ziel**: neue/edited Dateien ideal **≤ 200 Zeilen** funktionale Logik pro Modul.
+- **Hardcap**: **700 Zeilen** pro Datei nicht überschreiten; darüber **pflicht**: Aufteilung (Unterkomponenten, Hooks, Utils, Slice-Teile).
+
+<example>
+Große View: Presentational-Komponenten extrahieren, Listen/Formular in `components/` unterhalb der View.
+</example>
+
+<example type="invalid">
+700+ Zeilen in einer TSX-Datei durch „nur noch etwas dranhängen“ weiter wachsen lassen.
+</example>
+
+- Komplexe Redux-Logik: Selektoren/Thunk-Helfer auslagern; IDB-Zugriff bleibt im Service.
+- KI-/Vault-Logik: `@src/services/ai/**` und `@src/services/security/**`; siehe `@.cursor/rules/103-ai-byok-layer.mdc`.

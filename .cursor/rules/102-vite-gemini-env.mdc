@@ -1,0 +1,21 @@
+---
+description: No client bundle secrets; Vite without define for keys; BYOK vault and optional proxy only
+globs: vite.config.ts,src/**/*.ts,src/**/*.tsx
+alwaysApply: false
+---
+
+# Vite & API-Umgebung (BYOK)
+
+- **Keine** Provider-API-Keys über `loadEnv` / `define` in `vite.config.ts` injizieren — das würde Secrets ins Client-Bundle pressen.
+- Keys gehören in den **Vault** (`aiKeyVault`) oder optional in einen **Server-Proxy** (Env nur auf dem Host).
+- `.env.example` dokumentiert höchstens **nicht-geheime** Flags (z. B. Proxy-URL); keine echten Keys.
+
+<example>
+Neuer Cloud-Provider: Adapter in `@src/services/ai/adapters/`; Schlüsselabruf nur über `getProviderSecret` nach Vault-Unlock.
+</example>
+
+<example type="invalid">
+`define: { GEMINI_API_KEY: JSON.stringify(...) }` oder README „setzen Sie GEMINI_API_KEY in .env“ für den Browser-Build.
+</example>
+
+- `vite.config.ts`: keine globale Secret-Oberfläche per `define`.

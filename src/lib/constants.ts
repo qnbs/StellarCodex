@@ -2,7 +2,14 @@ import { Themes } from '../types';
 
 export const DB_NAME = 'StellarCodexDB';
 export const STORE_NAME = 'concepts';
-export const DB_VERSION = 1;
+/** Encrypted API key material (BYOK) — never store plaintext outside Web Crypto */
+export const STORE_VAULT_SECRETS = 'vaultSecrets';
+export const STORE_VAULT_META = 'vaultMeta';
+/** Directed edges between concepts (Phase 2 graph) */
+export const STORE_CONCEPT_EDGES = 'conceptEdges';
+/** Generated worldbuilding bibles (Phase 2) */
+export const STORE_WORLD_BIBLES = 'worldBibles';
+export const DB_VERSION = 3;
 
 export const THEMES = { cyan: 'cyan', amber: 'amber' } as const;
 export const LANGUAGES = { en: 'en', de: 'de' } as const;

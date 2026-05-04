@@ -1,0 +1,31 @@
+---
+description: Mandate deterministic tests; mock externals and never comment out failing assertions
+globs: **/*.test.ts,**/*.test.tsx,**/*.spec.ts,**/*.spec.tsx
+alwaysApply: false
+---
+
+# Testing
+
+## CI vs. lokal (Low-End)
+
+Vollständige **Production-Builds**, **gesamte Suite** und **E2E** sind in der **GitHub Actions**-Pipeline vorgesehen (`docs/DEVELOPMENT.md`, `.github/workflows/ci.yml`). Lokal: gezielte Tests und `typecheck`; keine Pflicht, schwere Läufe auf schwacher Hardware zu wiederholen, wenn CI dieselbe Prüfung übernimmt.
+
+## Determinismus
+
+- Jeder Test **isoliert**: keine Abhängigkeit von Reihenfolge, Uhrzeit, Netzwerk oder echtem IndexedDB ohne Fake.
+- **Mocks** für `fetch`, Gemini, Browser-APIs und Persistenz, soweit nicht ein kontrollierter Fake-Store genutzt wird.
+
+## Verbot
+
+- **Fehlschlagende Tests auskommentieren oder löschen**, um Builds grün zu bekommen, ist **untersagt**. Ursache beheben oder Test korrekt anpassen.
+
+<example>
+IDB: gemocktes `idb`-Modul oder Test-Adapter injizieren; Assertions auf erwarteten State nach async Flush.
+</example>
+
+<example type="invalid">
+`// expect(result).toBe(...)` weglassen, weil CI rot ist.
+</example>
+
+- Keine festen Timeouts als „Fix“; lieber `waitFor`/`fakeTimers` gezielt einsetzen.
+- Krypto-Tests (PBKDF2/AES in `cryptoHelpers.test.ts`) können auf langsamer Hardware **>1 s** dauern — kein flakes durch willkürliche Timeouts „fixen“.
